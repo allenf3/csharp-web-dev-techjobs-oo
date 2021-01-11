@@ -19,9 +19,13 @@ namespace TechJobsOO
             nextId++;
         }
 
-        public Job(string name) : this()
+        public Job(string name, Employer employerName, Location employerLocation, PositionType jobType, CoreCompetency jobCoreCompetency) : this()
         {
             Name = name;
+            EmployerName = employerName;
+            EmployerLocation = employerLocation;
+            JobType = jobType;
+            JobCoreCompetency = jobCoreCompetency;
         }
 
         public override bool Equals(object obj)
