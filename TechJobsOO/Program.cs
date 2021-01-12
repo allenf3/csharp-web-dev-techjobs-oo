@@ -22,11 +22,6 @@ namespace TechJobsOO
                 Console.WriteLine(job);
             }
             */
-
-            Job job = new Job();
-            job.Name = "Something";
-            Console.WriteLine(job.ToString());
-            Console.WriteLine("-----");
         }
     }
 }

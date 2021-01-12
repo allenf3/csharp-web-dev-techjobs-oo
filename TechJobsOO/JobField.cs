@@ -21,12 +21,6 @@ namespace TechJobsOO
             Value = value;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is JobField field &&
-                   Id == field.Id;
-        }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(Id);
@@ -35,6 +29,12 @@ namespace TechJobsOO
         public override string ToString()
         {
             return Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is JobField field &&
+                   Id == field.Id;
         }
     }
 }
