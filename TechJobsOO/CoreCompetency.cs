@@ -16,9 +16,9 @@ namespace TechJobsOO
             nextId++;
         }
 
-        public CoreCompetency(string v) : this()
+        public CoreCompetency(string value) : this()
         {
-            Value = v;
+            Value = value;
         }
 
         public override bool Equals(object obj)

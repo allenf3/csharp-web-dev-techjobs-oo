@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using TechJobsOO;
 
 namespace TechJobsTests
@@ -51,6 +52,24 @@ namespace TechJobsTests
         }
 
         [TestMethod]
+        public void TestJobToStringFirstLineEmpty()
+        {
+            string firstLine;
+            using (var reader = new StringReader(fullJob1.ToString()))
+            {
+                firstLine = reader.ReadLine();
+            }
+            Assert.AreEqual("", firstLine);
+        }
+
+        [TestMethod]
+        public void TestJobToStringLastLineEmpty()
+        {
+            string[] lines = fullJob1.ToString().Split("\r\n");
+            Assert.AreEqual("", lines[^1]);
+        }
+
+        [TestMethod]
         public void TestJobToStringMethod()
         {
             string expectedString =
@@ -63,8 +82,13 @@ namespace TechJobsTests
                 $"Core Competency: Persistence\r\n";
             Assert.AreEqual(expectedString, fullJob1.ToString());
 
+        }
+
+        [TestMethod]
+        public void TestDataNotAvailableForEmptyProperties()
+        {
             Job job3 = new Job();
-            job3.Name = "BigJob";
+            job3.Name = "BigJob"; // One field must be set to avoid triggering "job does not exist"
 
             string expectedEmpty =
                 $"\r\n" +
@@ -75,10 +99,12 @@ namespace TechJobsTests
                 $"Position Type: Data not available\r\n" +
                 $"Core Competency: Data not available\r\n";
             Assert.AreEqual(expectedEmpty, job3.ToString());
+        }
 
+        [TestMethod]
+        public void JobDoesNotExistIfNoPropertiesExceptID()
+        {
             Assert.AreEqual("OOPS! This job does not seem to exist.", job1.ToString());
-
-
         }
     }
 }

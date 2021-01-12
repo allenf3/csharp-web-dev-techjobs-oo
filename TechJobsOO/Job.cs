@@ -55,6 +55,7 @@ namespace TechJobsOO
                 if (property.GetValue(this) != null)
                 {
                     noneSet = false;
+                    break;
                 }
             }
 
