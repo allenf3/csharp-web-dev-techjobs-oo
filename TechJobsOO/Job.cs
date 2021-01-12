@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection;
+using System.Text;
+
 namespace TechJobsOO
 {
     public class Job
@@ -39,8 +42,36 @@ namespace TechJobsOO
             return HashCode.Combine(Id);
         }
 
+        public override string ToString()
+        {
+            bool noneSet = true;
 
+            foreach (PropertyInfo property in typeof(Job).GetProperties())
+            {
+                if (property.Name == "Id" )
+                {
+                    continue;
+                }
+                if (property.GetValue(this) != null)
+                {
+                    noneSet = false;
+                }
+            }
 
-        // TODO: Generate Equals() and GetHashCode() methods.
+            if (noneSet)
+            {
+                return "OOPS! This job does not seem to exist.";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\r\n");
+            sb.Append($"ID: { Id }\r\n");
+            sb.Append($"Name: { Name?? "Data not available" }\r\n");
+            sb.Append($"Employer: { (EmployerName != null ? EmployerName.Value :  "Data not available") }\r\n");
+            sb.Append($"Location: { (EmployerLocation != null ? EmployerLocation.Value : "Data not available") }\r\n");
+            sb.Append($"Position Type: { (JobType != null ? JobType.Value : "Data not available") }\r\n");
+            sb.Append($"Core Competency: { (JobCoreCompetency != null ? JobCoreCompetency.Value : "Data not available") }\r\n");
+            return sb.ToString();
+        }
     }
 }

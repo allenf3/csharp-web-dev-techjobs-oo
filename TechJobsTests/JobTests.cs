@@ -7,30 +7,29 @@ namespace TechJobsTests
     [TestClass]
     public class JobTests
     {
+        Job job1;
+        Job job2;
         Job fullJob1;
         Job fullJob2;
 
         [TestInitialize]
         public void MakeJobs()
         {
-            fullJob1 = new Job("Product tester",
-                       new Employer("ACME"),
-                       new Location("Desert"),
-                       new PositionType("Quality Control"),
-                       new CoreCompetency("Persistence"));
+            Employer emp = new Employer("ACME");
+            Location loc = new Location("Desert");
+            PositionType pt = new PositionType("Quality Control");
+            CoreCompetency cc = new CoreCompetency("Persistence");
 
-            fullJob2 = new Job("Product tester",
-                       new Employer("ACME"),
-                       new Location("Desert"),
-                       new PositionType("Quality Control"),
-                       new CoreCompetency("Persistence"));
+            fullJob1 = new Job("Product tester", emp, loc, pt, cc);
+            fullJob2 = new Job("Product tester", emp, loc, pt, cc);
+
+            job1 = new Job();
+            job2 = new Job();
         }
 
         [TestMethod]
         public void TestSettingJobId()
         {
-            Job job1 = new Job();
-            Job job2 = new Job();
             Assert.IsFalse(job1.Id == job2.Id);
             Assert.IsTrue(Math.Abs(job1.Id - job2.Id) == 1);
         }
@@ -49,6 +48,37 @@ namespace TechJobsTests
         public void TestJobsForEquality()
         {
             Assert.IsFalse(fullJob1.Equals(fullJob2));
+        }
+
+        [TestMethod]
+        public void TestJobToStringMethod()
+        {
+            string expectedString =
+                $"\r\n" +
+                $"ID: { fullJob1.Id }\r\n" +
+                $"Name: Product tester\r\n" +
+                $"Employer: ACME\r\n" +
+                $"Location: Desert\r\n" +
+                $"Position Type: Quality Control\r\n" +
+                $"Core Competency: Persistence\r\n";
+            Assert.AreEqual(expectedString, fullJob1.ToString());
+
+            Job job3 = new Job();
+            job3.Name = "BigJob";
+
+            string expectedEmpty =
+                $"\r\n" +
+                $"ID: { job3.Id }\r\n" +
+                $"Name: BigJob\r\n" +
+                $"Employer: Data not available\r\n" +
+                $"Location: Data not available\r\n" +
+                $"Position Type: Data not available\r\n" +
+                $"Core Competency: Data not available\r\n";
+            Assert.AreEqual(expectedEmpty, job3.ToString());
+
+            Assert.AreEqual("OOPS! This job does not seem to exist.", job1.ToString());
+
+
         }
     }
 }
