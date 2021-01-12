@@ -64,14 +64,32 @@ namespace TechJobsOO
                 return "OOPS! This job does not seem to exist.";
             }
 
+            string FindVal(JobField classOfVal)
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(classOfVal.Value))
+                    {
+                        return classOfVal.Value;
+                    }
+                    return "Data not available";
+                }
+                catch
+                {
+                    return "Data not available";
+                }
+            }
+
+            FindVal(EmployerName);
+
             StringBuilder sb = new StringBuilder();
             sb.Append("\r\n");
             sb.Append($"ID: { Id }\r\n");
             sb.Append($"Name: { Name?? "Data not available" }\r\n");
-            sb.Append($"Employer: { (EmployerName != null ? EmployerName.Value :  "Data not available") }\r\n");
-            sb.Append($"Location: { (EmployerLocation != null ? EmployerLocation.Value : "Data not available") }\r\n");
-            sb.Append($"Position Type: { (JobType != null ? JobType.Value : "Data not available") }\r\n");
-            sb.Append($"Core Competency: { (JobCoreCompetency != null ? JobCoreCompetency.Value : "Data not available") }\r\n");
+            sb.Append($"Employer: { FindVal(EmployerName) }\r\n");
+            sb.Append($"Location: { FindVal(EmployerLocation) }\r\n");
+            sb.Append($"Position Type: { FindVal(JobType) }\r\n");
+            sb.Append($"Core Competency: { FindVal(JobCoreCompetency) }\r\n");
             return sb.ToString();
         }
     }
